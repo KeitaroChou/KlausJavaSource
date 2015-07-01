@@ -23,6 +23,7 @@ public class Vote {
 
     }
 
+    
     // 輸入選項
     void entVot() {
 
@@ -32,10 +33,10 @@ public class Vote {
             repeat = false;
             try {
 
-                menu();
                 System.out.print("請輸入代號 > ");
                 this.choice = this.sc.nextInt();
                 
+                do {
                 if (this.choice == 1) {
                     this.b[0]++;
                 } else if (this.choice == 2) {
@@ -43,6 +44,7 @@ public class Vote {
                 } else if (this.choice == 3) {
                     this.b[2]++;
                 }
+                } while ()
                 
                 statistics();
                 
@@ -55,6 +57,8 @@ public class Vote {
 
     }
 
+    
+    // 唱票
     void callOutBallot() {
 
         if (this.choice == 1) {
@@ -65,6 +69,7 @@ public class Vote {
 
     }
 
+    
     // 等候三秒
     void waitSec() {
 
@@ -75,14 +80,17 @@ public class Vote {
 
     }
 
+    
     // 票數顯示
     void statistics() {
         for (int i = 0; i < a.length; i++) {
             System.out.print(this.a[i] + "目前有 " + this.b[i] + " 票\n");
         }
         
+        this.choice = 0;
         System.out.println("----------------");
         waitSec();
+        menu();
         
         // 顯示選單();
         // 輸入選項();
