@@ -5,7 +5,7 @@ public class VoteTest {
         
         Vote vote = new Vote();
         
-        vote.menu();
+        vote.runGroup();
         
     }
     
