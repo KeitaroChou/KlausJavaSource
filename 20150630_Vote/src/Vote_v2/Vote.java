@@ -1,3 +1,5 @@
+package Vote_v2;
+
 // =============
 // 投票機
 // ver1 final
