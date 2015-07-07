@@ -1,6 +1,6 @@
 /// =============
 // 投票機
-// ver3.0 beta
+// ver3.0 Pre-alpha
 // =============
 
 package Vote_v3;
@@ -13,68 +13,94 @@ public class Vote {
     private final String[] names;
     private int num;
     private int[] b;                                                                          // 累計投票數
-    private int choice = 0;                                                                                         // 輸入選項
+    private int choice;                                                                                         // 輸入選項
+    private boolean end;
+    private final Scanner sc = new Scanner(System.in);
+    private int endnum;
     
     public Vote(String... names) {         // 為了要讓 VoteTest 的參數可以傳過來，屬性要設 public
         this.names = names;
     }
 
+    public void runGroup() {
+        
+        while(true) {
+            menu();                                         // 選單
+            entVot();                                       // 輸入選項
+                if (this.end) {
+                    System.out.println("=== 投票結算 ===");
+                    statistics();
+                    System.out.println("Bye.");
+                    break;
+                }
+            callOutBallot();                            // 唱票
+            waitSec();                                      // 等候一秒
+            count();                                         // 計票
+            statistics();                                   // 顯示得票
+            waitSec();                                      // 等候一秒
+        }
+        
+    }
     
-    // 選單
-    public void menu() {                                                    // 為了要讓 VoteTest 讀的到，屬性要設 public
+    
+    // 選單 OK
+    private void menu() {                                                    // 為了要讓 VoteTest 讀的到，屬性要設 public
 
         System.out.println("最受歡迎歌手票選");
         for (int i = 0; i < this.names.length; i++) {
             this.num = i + 1;
             System.out.println(this.num + ". " + this.names[i]);
         }
-        System.out.println((this.names.length + 1) + ". 結束");
+        this.endnum = this.names.length + 1;
+        System.out.println(this.endnum + ". 結束");
         System.out.println("----------------");
+        System.out.println(this.names.length);
         entVot();
 
     }
 
     
-    // 輸入選項
+    // 輸入判斷
     void entVot() {
 
+        boolean repeat = true;
+        
         do {
             try {                                                                                                               // 例外處理
                 System.out.print("請輸入代號 > ");
-                Scanner sc = new Scanner(System.in);
-                this.choice = sc.nextInt();
-                
-                
-                
-                callOutBallot();                                                                                        // 唱票
-                statistics();                                                                                               // 票數顯示
-            } catch (InputMismatchException e1) {                                               // 例外一：錯誤字元
-                System.out.println("請輸入正確選項。");
-            }catch (ArrayIndexOutOfBoundsException e2){                             // 例外二：超出範圍數值(超出預設陣列大小)
-                System.out.println("數值過大。");
+                this.choice = this.sc.nextInt();
+                if (this.choice < this.endnum || this.choice > 1) {
+                    repeat = false;
+                } else {
+                    System.out.println("請輸入範圍內選項。");
+                }
+            } catch (InputMismatchException e1) {                                               // 例外：錯誤字元
+                System.out.println("請輸入數值選項。");
             }
-        } while (this.choice != 4);                                                                             // 如果 repeat 為 true，或輸入值不為 4，繼續執行迴圈
+        } while (repeat);                                                                             // 如果 repeat 為 true，繼續執行迴圈
+        
+        this.end = (this.choice == this.endnum);
 
     }
 
     
-    // 唱票
+    // 唱票 OK
     void callOutBallot() {
         
         if (this.choice >= 1) {                                                                                 // 防止沒人投票就結票產生錯誤(矩陣位置指定為負數)
-            System.out.println(this.names[this.choice - 1] + "  1票");
+            System.out.println(this.names[this.choice - 1] + " 得 1 票");
         }
-        waitSec();
         
     }
 
-    
+    // 計票
     void count() {
-        
+        int index = this.choice - 1;
+        this.b[index]++;
     }
     
     
-    // 等候一秒
+    // 等候一秒 OK
     void waitSec() {
         
         try {
@@ -85,14 +111,13 @@ public class Vote {
     }
 
     
-    // 票數顯示
+    // 票數顯示 
     void statistics() {
         
         for (int i = 0; i < names.length; i++) {
             System.out.print(this.names[i] + " 有 " + this.b[i] + " 票\n");
         }
         System.out.println("------------------");
-        waitSec();
         
     }
 

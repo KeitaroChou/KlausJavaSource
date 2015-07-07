@@ -6,9 +6,10 @@ public class VoteTest {
 
     public static void main(String[] args) {
         
-        Vote voterun = new Vote("aaa","bbb","ccc", "ddd");
+        Vote vote = new Vote("aaa", "bbb", "ccc", "ddd");
         
-        voterun.menu();
+        vote.runGroup();
+        
     }
     
 }
