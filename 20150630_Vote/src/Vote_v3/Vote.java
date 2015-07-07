@@ -12,7 +12,7 @@ public class Vote {
 
     private final String[] names;
     private int num;
-    private final int b[] = {0, 0, 0};                                                                          // 累計投票數
+    private int[] b;                                                                          // 累計投票數
     private int choice = 0;                                                                                         // 輸入選項
     
     public Vote(String... names) {         // 為了要讓 VoteTest 的參數可以傳過來，屬性要設 public
@@ -24,10 +24,6 @@ public class Vote {
     public void menu() {                                                    // 為了要讓 VoteTest 讀的到，屬性要設 public
 
         System.out.println("最受歡迎歌手票選");
-//        System.out.println("1. " + this.names);
-//        System.out.println("2. " + this.names);
-//        System.out.println("3. " + this.names);
-//        System.out.println("4. 結票");
         for (int i = 0; i < this.names.length; i++) {
             this.num = i + 1;
             System.out.println(this.num + ". " + this.names[i]);
@@ -47,18 +43,9 @@ public class Vote {
                 System.out.print("請輸入代號 > ");
                 Scanner sc = new Scanner(System.in);
                 this.choice = sc.nextInt();
-                if (this.choice == 1) {
-                    this.b[0]++;
-                } else if (this.choice == 2) {
-                    this.b[1]++;
-                } else if (this.choice == 3) {
-                    this.b[2]++;
-                } else if (this.choice == 4) {
-                    System.out.println("\n==== 投票結果 ====");
-                    statistics();
-                    System.out.println("Bye.");
-                    break;
-                }
+                
+                
+                
                 callOutBallot();                                                                                        // 唱票
                 statistics();                                                                                               // 票數顯示
             } catch (InputMismatchException e1) {                                               // 例外一：錯誤字元
@@ -75,12 +62,17 @@ public class Vote {
     void callOutBallot() {
         
         if (this.choice >= 1) {                                                                                 // 防止沒人投票就結票產生錯誤(矩陣位置指定為負數)
-            System.out.println(this.a[this.choice - 1] + "  1票");
+            System.out.println(this.names[this.choice - 1] + "  1票");
         }
         waitSec();
         
     }
 
+    
+    void count() {
+        
+    }
+    
     
     // 等候一秒
     void waitSec() {
@@ -96,8 +88,8 @@ public class Vote {
     // 票數顯示
     void statistics() {
         
-        for (int i = 0; i < a.length; i++) {
-            System.out.print(this.a[i] + " 有 " + this.b[i] + " 票\n");
+        for (int i = 0; i < names.length; i++) {
+            System.out.print(this.names[i] + " 有 " + this.b[i] + " 票\n");
         }
         System.out.println("------------------");
         waitSec();
