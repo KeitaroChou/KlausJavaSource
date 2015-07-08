@@ -5,13 +5,19 @@ public class Monster extends Character {
     // 怪物專有素質，其餘另外引用父類別
     String treasure;
 
-    // 不含武器建構子
+    /**
+     * 不含武器建構子
+     * @param treasure @param name @param atk @param hp
+     */
     public Monster(String treasure, String name, int atk, int hp) {
         super(name, atk, hp);
         this.treasure = treasure;
     }
 
-    // 含武器建構子
+    /**
+     * 含武器建構子
+     * @param treasure @param name @param atk @param hp @param weap
+     */
     public Monster(String treasure, String name, int atk, int hp, Weapon weap) {
         super(name, atk, hp, weap);
         this.treasure = treasure;
