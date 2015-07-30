@@ -12,10 +12,8 @@ public class ObjectInputStreamTest {
             System.out.println(stu.toString());
             System.out.println("-- serialVersionUID = " + Student.serialVersionUID);
             
-        } catch(IOException e1) {
-            System.out.println(e1);
-        } catch(ClassNotFoundException e2) {
-            System.out.println(e2);
+        } catch(IOException | ClassNotFoundException e) {
+            System.out.println(e);
         }
         
     }

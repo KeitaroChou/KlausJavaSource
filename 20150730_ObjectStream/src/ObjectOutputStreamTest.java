@@ -11,7 +11,7 @@ public class ObjectOutputStreamTest {
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src/student.obj"))) {
             
             oos.writeObject(stu);
-            System.out.println("序列化儲存以下資料：");
+            System.out.println("儲存以下序列化資料：");
             System.out.println(stu.name + "\t" + stu.math + "\t" + stu.eng);
             System.out.println("student 物件儲存成功。");
             System.out.println("-- serialVersionUID = " + Student.serialVersionUID);

@@ -13,7 +13,7 @@ public class Student implements Serializable {
     transient private float avg;        // 宣告為 transient，表示此欄位不要序列化
     
     // 輸入時給系統自動呼叫使用
-    private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException{
+    private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
         
         stream.defaultReadObject();     // 執行反序列化
         this.avg = (this.math + this.eng) / 2.0f;
