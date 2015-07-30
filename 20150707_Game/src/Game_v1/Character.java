@@ -6,7 +6,7 @@ public class Character {
     private String name;
     private int atk;
     private int hp;
-    private Weapon weap;
+    private Weapon weap;    // 把類別 Weapon 當型別宣告
 
     /**
      * 單獨設定名稱
@@ -55,7 +55,7 @@ public class Character {
     }
 
     /**
-     * 含武器建構子
+     * 角色含武器建構子
      *
      * @param name @param atk @param hp @param weap
      */
