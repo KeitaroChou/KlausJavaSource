@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>180</y>
+      <w>540</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>Employee
+--
+int id;
+String firstName;
+String lastName;
+Date birthDate;
+float salary;
+--
+Employee(int id, String firstName, String lastName, String birthDate, float salary)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1150</x>
+      <y>280</y>
+      <w>270</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>EmployeeException
+--
+EmployeeException( String message )
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1150</x>
+      <y>150</y>
+      <w>270</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>RuntimeException
+--
+RuntimeException(String message )</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1280</x>
+      <y>220</y>
+      <w>30</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1050</x>
+      <y>300</y>
+      <w>120</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>570</x>
+      <y>460</y>
+      <w>380</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>EmployeeArrayDB
+--
+ArrayList&lt;Employee&gt; employees;
+--
+void add(Employee emp)
+void update(Employee emp)
+void delete(int id)
+void Employee findById(int id)
+ArrayList&lt;Employee&gt; getAllEmployees()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>760</x>
+      <y>380</y>
+      <w>30</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>160</x>
+      <y>180</y>
+      <w>270</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>EmployeeTest
+--
+Scanner sc
+EmployeeArrayDB employDB
+--
+void main(String[] args)
+void add()
+void delete()
+void read()
+void update()
+void list()
+void save()
+Employee inputEmployee()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>420</x>
+      <y>280</y>
+      <w>120</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>420</x>
+      <y>280</y>
+      <w>170</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>150.0;260.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
