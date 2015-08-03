@@ -3,13 +3,13 @@ import java.sql.*;
 
 public class Empolyee {
     
-    private java.sql.Connection con = null;
-    private String url = "jdbc:sqlsever://";
-    private String serverName = "localhost";
-    private String portName = "3306";
-    private String databassName = "javatest";
-    private String userName = "klaus";
-    private String password = "klaus580925";
+//    private java.sql.Connection con = null;
+//    private String url = "jdbc:sqlsever://";
+//    private String serverName = "localhost";
+//    private String portName = "3306";
+//    private String databassName = "javatest";
+//    private String userName = "klaus";
+//    private String password = "klaus580925";
     
     private int id;
     private String firstName;
@@ -18,6 +18,14 @@ public class Empolyee {
     private float salary;
     
     public void viewAll() {
+        
+//        try {
+//            
+//            String query = "SELECT * FROM empolyee";
+//            
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
         
         
         
