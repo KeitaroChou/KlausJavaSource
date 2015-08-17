@@ -46,6 +46,7 @@ public class DBLink {
                 System.out.println("員工姓名：" + firstName + " " + lastName);
                 System.out.println("生日：" + year + "-" + month + "-" + day);
                 System.out.println("薪水：" + "USD $" + salary);
+                System.out.println();
                     
             }
             
