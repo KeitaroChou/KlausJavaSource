@@ -24,7 +24,7 @@ public class jsonInDB {
 
         // 連結資料庫
         String driverName = "com.mysql.jdbc.Driver";
-        String connectionString = "jdbc:mysql://klaus-macbook-air.local:3306/test?" + "user=klaus&password=klaus580925&useUnicode=true&characterEncoding=utf-8";
+        String connectionString = "jdbc:mysql://104.155.229.208:3306/jsonInDB?" + "user=klaustest&password=20150709&useUnicode=true&characterEncoding=utf-8";
 
         String xmlResponse = null;  // 需要先初始化
 
@@ -33,6 +33,8 @@ public class jsonInDB {
         // 讀入引用連結內的資料
         try {
 
+            System.out.println("[↓] 開始讀取 ＪＳＯＮ 資料 ...");
+            
             URL url = new URL("http://data.ntpc.gov.tw/od/data/api/EDC3AD26-8AE7-4916-A00B-BC6048D19BF8?$format=json");     // 抓取網頁位址
             HttpURLConnection huc = (HttpURLConnection) url.openConnection();   // 用 HttpURLConnection 開啟(建立連線)
 
@@ -49,8 +51,8 @@ public class jsonInDB {
                 }
 
                 xmlResponse = sb.toString();
-                System.out.println(xmlResponse);
                 br.close();             // 關閉資源
+                System.out.println("[√] ＪＳＯＮ 資料讀取完成");
 
             }
             huc.disconnect();       // 關閉連線
@@ -67,6 +69,8 @@ public class jsonInDB {
 
         try {
 
+            System.out.println("[↑] 開始寫入 ＤＢ ...");
+            
             // 載入 JDBC driver class (Library 需載入 MySQL JDBC driver)
             Class.forName(driverName);
             // 得到 Connection
@@ -177,7 +181,7 @@ public class jsonInDB {
                 ps.setString(31, foodscraps_sat);
 
 //                status ps.executeUpdate();
-                ps.executeUpdate();
+                ps.executeUpdate();     // ？？？
 
             }
 
@@ -191,6 +195,7 @@ public class jsonInDB {
             try {
                 if (connection != null) {
                     connection.close();
+                    System.out.println("[√] ＤＢ 寫入完成");
                 }
             } catch (Exception e4) {
                 System.out.println(e4);
