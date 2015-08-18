@@ -18,7 +18,7 @@ import org.json.simple.parser.JSONParser;
 import java.io.IOException;
 import org.json.simple.parser.ParseException;
 
-public class jsonInDB {
+public class jsonInDB_GarbageTruckLineMap {
 
     public static void main(String[] args) {
 
@@ -67,6 +67,8 @@ public class jsonInDB {
         JSONObject person;
         PreparedStatement ps = null;
 
+        
+        // DB 寫入
         try {
 
             System.out.println("[↑] 開始寫入 ＤＢ ...");
@@ -83,17 +85,16 @@ public class jsonInDB {
             for (Object o : jsonarray) {
 
                 ps = connection.prepareStatement("INSERT INTO jsonIn_GarbageTruckLineMap values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-//                ps = connection.prepareStatement("INSERT INTO jsonIn_GarbageTruckLineMap values (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31)");
 
                 person = (JSONObject) o;
 
-                String city = (String) person.get("city");
+                String city = (String) person.get("linename");      // 新北市府編錯
                 ps.setString(1, city);
 
-                String lineid = (String) person.get("lineid");
+                String lineid = (String) person.get("city");        // 新北市府編錯
                 ps.setString(2, lineid);
 
-                String linename = (String) person.get("linename");
+                String linename = (String) person.get("lineid");    // 新北市府編錯
                 ps.setString(3, linename);
 
                 String rank = (String) person.get("rank");
