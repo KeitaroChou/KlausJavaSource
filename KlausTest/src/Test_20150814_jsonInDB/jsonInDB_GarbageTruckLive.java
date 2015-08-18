@@ -89,13 +89,13 @@ public class jsonInDB_GarbageTruckLive {
 
                 person = (JSONObject) o;
 
-                String lineid = (String) person.get("lineid");      // 新北市府編錯
+                String lineid = (String) person.get("lineid");
                 ps.setString(1, lineid);
 
-                String car = (String) person.get("car");        // 新北市府編錯
+                String car = (String) person.get("car");
                 ps.setString(2, car);
 
-                String time = (String) person.get("time");    // 新北市府編錯
+                String time = (String) person.get("time");
                 ps.setString(3, time);
 
                 String location = (String) person.get("location");
