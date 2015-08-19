@@ -25,7 +25,6 @@ public class AddressTurnCoordinateTool {
 
             // 執行 SQL 語句
             String selectSQL = "SELECT REPLACE(location, '附近', '') AS location FROM jsonIn_GarbageTruckLive";     // 直接做 REPLACE 欄位名稱會被變更，resultSet 就抓不到了，所以需再更名為 location
-//            String selectSQL = "SELECT * FROM jsonIn_GarbageTruckLive";
             ResultSet resultSet = statement.executeQuery(selectSQL);
             
             // 計數器
