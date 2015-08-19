@@ -61,7 +61,7 @@ public class jsonInDB_GarbageTruckLive {
 
                 xmlResponse = sb.toString();
                 br.close();             // 關閉資源
-                System.out.println("[√] ＪＳＯＮ 資料讀取完成");
+                System.out.println("[✓] ＪＳＯＮ 資料讀取完成");
 
             }
             huc.disconnect();       // 關閉連線
@@ -131,7 +131,7 @@ public class jsonInDB_GarbageTruckLive {
             try {
                 if (connection != null) {
                     connection.close();
-                    System.out.println("[√] ＤＢ 寫入完成，共寫入 " + counter + " 筆資料");
+                    System.out.println("[✓] ＤＢ 寫入完成，共寫入 " + counter + " 筆資料");
                 }
             } catch (Exception e4) {
                 System.out.println(e4);
