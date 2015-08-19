@@ -1,4 +1,9 @@
 
+// ==========================================
+// 擷取新北市垃圾清運車輛所在位置資料(ＪＳＯＮ)
+// 並寫入ＤＡＴＡＢＡＳＳ
+// ==========================================
+
 package Test_20150814_jsonInDB;
 
 // 讀入引用連結內的資料
@@ -25,7 +30,10 @@ public class jsonInDB_GarbageTruckLive {
 
         // 連結資料庫
         String driverName = "com.mysql.jdbc.Driver";
-        String connectionString = "jdbc:mysql://104.155.229.208:3306/jsonInDB?" + "user=klaustest&password=20150709&useUnicode=true&characterEncoding=utf-8";
+        // localhost DB
+        String connectionString = "jdbc:mysql://klaus-macbook-air.local:3306/test?" + "user=klaus&password=klaus580925&useUnicode=true&characterEncoding=utf-8";
+        // Google Cloud Platform DB
+//        String connectionString = "jdbc:mysql://104.155.229.208:3306/jsonInDB?" + "user=klaustest&password=20150709&useUnicode=true&characterEncoding=utf-8";
 
         String xmlResponse = null;  // 需要先初始化
 
@@ -66,14 +74,14 @@ public class jsonInDB_GarbageTruckLive {
         JSONParser parser = new JSONParser();
         JSONArray jsonarray;
         JSONObject person;
-        PreparedStatement ps = null;
+        PreparedStatement insertPS = null;
+        PreparedStatement truncateTablePS = null;
+        int counter = 0;                    // ＤＢ寫入次數計數器
 
         
         // DB 寫入
         try {
 
-            System.out.println("[↑] 開始寫入 ＤＢ ...");
-            
             // 載入 JDBC driver class (Library 需載入 MySQL JDBC driver)
             Class.forName(driverName);
             // 得到 Connection
@@ -82,27 +90,34 @@ public class jsonInDB_GarbageTruckLive {
             Statement statement = connection.createStatement();
             // 抓到的網頁內容轉型、丟入 JSONArray
             jsonarray = (JSONArray) parser.parse(xmlResponse);
+            
+            // 資料表清空
+            truncateTablePS = connection.prepareStatement("TRUNCATE TABLE jsonIn_GarbageTruckLineMap");
+            System.out.println("[!] 已清空資料表");
+            System.out.println("[↑] 開始寫入 ＤＢ ...");
 
             for (Object o : jsonarray) {
 
-                ps = connection.prepareStatement("INSERT INTO jsonIn_GarbageTruckLive values (?, ?, ?, ?)");
+                insertPS = connection.prepareStatement("INSERT INTO jsonIn_GarbageTruckLive values (?, ?, ?, ?)");
 
                 person = (JSONObject) o;
 
                 String lineid = (String) person.get("lineid");
-                ps.setString(1, lineid);
+                insertPS.setString(1, lineid);
 
                 String car = (String) person.get("car");
-                ps.setString(2, car);
+                insertPS.setString(2, car);
 
                 String time = (String) person.get("time");
-                ps.setString(3, time);
+                insertPS.setString(3, time);
 
                 String location = (String) person.get("location");
-                ps.setString(4, location);
+                insertPS.setString(4, location);
 
 //                status ps.executeUpdate();
-                ps.executeUpdate();     // ？？？
+                insertPS.executeUpdate();     // ？？？
+                
+                counter++;
 
             }
 
@@ -116,7 +131,7 @@ public class jsonInDB_GarbageTruckLive {
             try {
                 if (connection != null) {
                     connection.close();
-                    System.out.println("[√] ＤＢ 寫入完成");
+                    System.out.println("[√] ＤＢ 寫入完成，共寫入 " + counter + " 筆資料");
                 }
             } catch (Exception e4) {
                 System.out.println(e4);

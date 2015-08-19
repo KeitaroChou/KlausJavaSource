@@ -1,3 +1,9 @@
+
+// ==========================================
+// 擷取新北市垃圾車路線資料(ＪＳＯＮ)
+// 並寫入ＤＡＴＡＢＡＳＳ
+// ==========================================
+
 package Test_20150814_jsonInDB;
 
 // 讀入引用連結內的資料
@@ -65,13 +71,12 @@ public class jsonInDB_GarbageTruckLineMap {
         JSONParser parser = new JSONParser();
         JSONArray jsonarray;
         JSONObject person;
-        PreparedStatement ps = null;
-
+        PreparedStatement insertPS = null;
+        PreparedStatement truncateTablePS = null;
+        int counter = 0;                    // ＤＢ寫入次數計數器
         
         // DB 寫入
         try {
-
-            System.out.println("[↑] 開始寫入 ＤＢ ...");
             
             // 載入 JDBC driver class (Library 需載入 MySQL JDBC driver)
             Class.forName(driverName);
@@ -81,108 +86,116 @@ public class jsonInDB_GarbageTruckLineMap {
             Statement statement = connection.createStatement();
             // 抓到的網頁內容轉型、丟入 JSONArray
             jsonarray = (JSONArray) parser.parse(xmlResponse);
+            // 資料表清空
+            truncateTablePS = connection.prepareStatement("TRUNCATE TABLE jsonIn_GarbageTruckLineMap");
+            System.out.println("[!] 已清空資料表");
+            
+            System.out.println("[↑] 開始寫入 ＤＢ ...");
 
             for (Object o : jsonarray) {
-
-                ps = connection.prepareStatement("INSERT INTO jsonIn_GarbageTruckLineMap values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                
+                // 資料寫入
+                insertPS = connection.prepareStatement("INSERT INTO jsonIn_GarbageTruckLineMap values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
                 person = (JSONObject) o;
 
                 String city = (String) person.get("linename");      // 新北市府編錯
-                ps.setString(1, city);
+                insertPS.setString(1, city);
 
                 String lineid = (String) person.get("city");        // 新北市府編錯
-                ps.setString(2, lineid);
+                insertPS.setString(2, lineid);
 
                 String linename = (String) person.get("lineid");    // 新北市府編錯
-                ps.setString(3, linename);
+                insertPS.setString(3, linename);
 
                 String rank = (String) person.get("rank");
-                ps.setString(4, rank);
+                insertPS.setString(4, rank);
 
                 String name = (String) person.get("name");
-                ps.setString(5, name);
+                insertPS.setString(5, name);
 
                 String village = (String) person.get("village");
-                ps.setString(6, village);
+                insertPS.setString(6, village);
 
                 String longitude = (String) person.get("longitude");
-                ps.setString(7, longitude);
+                insertPS.setString(7, longitude);
 
                 String latitude = (String) person.get("latitude");
-                ps.setString(8, latitude);
+                insertPS.setString(8, latitude);
 
                 String time = (String) person.get("time");
-                ps.setString(9, time);
+                insertPS.setString(9, time);
 
                 String memo = (String) person.get("memo");
-                ps.setString(10, memo);
+                insertPS.setString(10, memo);
 
                 String garbage_sun = (String) person.get("garbage_sun");
-                ps.setString(11, garbage_sun);
+                insertPS.setString(11, garbage_sun);
 
                 String garbage_mon = (String) person.get("garbage_mon");
-                ps.setString(12, garbage_mon);
+                insertPS.setString(12, garbage_mon);
 
                 String garbage_tue = (String) person.get("garbage_tue");
-                ps.setString(13, garbage_tue);
+                insertPS.setString(13, garbage_tue);
 
                 String garbage_wed = (String) person.get("garbage_wed");
-                ps.setString(14, garbage_wed);
+                insertPS.setString(14, garbage_wed);
 
                 String garbage_thu = (String) person.get("garbage_thu");
-                ps.setString(15, garbage_thu);
+                insertPS.setString(15, garbage_thu);
 
                 String garbage_fri = (String) person.get("garbage_fri");
-                ps.setString(16, garbage_fri);
+                insertPS.setString(16, garbage_fri);
 
                 String garbage_sat = (String) person.get("garbage_sat");
-                ps.setString(17, garbage_sat);
+                insertPS.setString(17, garbage_sat);
 
                 String recycling_sun = (String) person.get("recycling_sun");
-                ps.setString(18, recycling_sun);
+                insertPS.setString(18, recycling_sun);
 
                 String recycling_mon = (String) person.get("recycling_mon");
-                ps.setString(19, recycling_mon);
+                insertPS.setString(19, recycling_mon);
 
                 String recycling_tue = (String) person.get("recycling_tue");
-                ps.setString(20, recycling_tue);
+                insertPS.setString(20, recycling_tue);
 
                 String recycling_wed = (String) person.get("recycling_wed");
-                ps.setString(21, recycling_wed);
+                insertPS.setString(21, recycling_wed);
 
                 String recycling_thu = (String) person.get("recycling_thu");
-                ps.setString(22, recycling_thu);
+                insertPS.setString(22, recycling_thu);
 
                 String recycling_fri = (String) person.get("recycling_fri");
-                ps.setString(23, recycling_fri);
+                insertPS.setString(23, recycling_fri);
 
                 String recycling_sat = (String) person.get("recycling_sat");
-                ps.setString(24, recycling_sat);
+                insertPS.setString(24, recycling_sat);
 
                 String foodscraps_sun = (String) person.get("foodscraps_sun");
-                ps.setString(25, foodscraps_sun);
+                insertPS.setString(25, foodscraps_sun);
 
                 String foodscraps_mon = (String) person.get("foodscraps_mon");
-                ps.setString(26, foodscraps_mon);
+                insertPS.setString(26, foodscraps_mon);
 
                 String foodscraps_tue = (String) person.get("foodscraps_tue");
-                ps.setString(27, foodscraps_tue);
+                insertPS.setString(27, foodscraps_tue);
 
                 String foodscraps_wed = (String) person.get("foodscraps_wed");
-                ps.setString(28, foodscraps_wed);
+                insertPS.setString(28, foodscraps_wed);
 
                 String foodscraps_thu = (String) person.get("foodscraps_thu");
-                ps.setString(29, foodscraps_thu);
+                insertPS.setString(29, foodscraps_thu);
 
                 String foodscraps_fri = (String) person.get("foodscraps_fri");
-                ps.setString(30, foodscraps_fri);
+                insertPS.setString(30, foodscraps_fri);
 
                 String foodscraps_sat = (String) person.get("foodscraps_sat");
-                ps.setString(31, foodscraps_sat);
+                insertPS.setString(31, foodscraps_sat);
 
 //                status ps.executeUpdate();
-                ps.executeUpdate();     // ？？？
+                insertPS.executeUpdate();     // ？？？
+                
+                counter++;
 
             }
 
@@ -196,7 +209,7 @@ public class jsonInDB_GarbageTruckLineMap {
             try {
                 if (connection != null) {
                     connection.close();
-                    System.out.println("[√] ＤＢ 寫入完成");
+                    System.out.println("[√] ＤＢ 寫入完成，共寫入 " + counter + " 筆資料");
                 }
             } catch (Exception e4) {
                 System.out.println(e4);
