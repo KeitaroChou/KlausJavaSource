@@ -1,43 +1,38 @@
+// =======================================================
+// 元件名稱：JSONInDB_GarbageTruckLive
+// 功能：擷取新北市垃圾車即時資料(ＪＳＯＮ)，並寫入ＤＡＴＡＢＡＳＳ
+// =======================================================
 
-// ==========================================
-// 擷取新北市垃圾清運車輛所在位置資料(ＪＳＯＮ)
-// 並寫入ＤＡＴＡＢＡＳＳ
-// ==========================================
+package idv.klaus;
 
-package Test_20150814_jsonInDB;
-
-// 讀入引用連結內的資料
-import java.net.URL;
-import java.net.HttpURLConnection;
-import java.io.InputStreamReader;
 import java.io.BufferedReader;
-
-// ＳＱＬ
-import java.sql.*;
-
-// ＪＳＯＮ
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
-// Exception
-import java.io.IOException;
 import org.json.simple.parser.ParseException;
 
-public class jsonInDB_GarbageTruckLive {
+public class JSONInDB_GarbageTruckLive {
+    
+    static DBLinker_klaus dblinker = new DBLinker_klaus();
 
-    public static void main(String[] args) {
+    // 建構子
+    public JSONInDB_GarbageTruckLive() {
 
         // 連結資料庫
         String driverName = "com.mysql.jdbc.Driver";
-        // localhost DB
-        String connectionString = "jdbc:mysql://klaus-macbook-air.local:3306/test?" + "user=klaus&password=klaus580925&useUnicode=true&characterEncoding=utf-8";
-        // Google Cloud Platform DB
-//        String connectionString = "jdbc:mysql://104.155.229.208:3306/jsonInDB?" + "user=klaustest&password=20150709&useUnicode=true&characterEncoding=utf-8";
-
+        // 引入連接資料庫資訊
+        String connectionString = dblinker.toString();
+        // 儲存 JSON 字串
         String xmlResponse = null;  // 需要先初始化
-
-//        int status = 0;
 
         // 讀入引用連結內的資料
         try {
@@ -75,8 +70,7 @@ public class jsonInDB_GarbageTruckLive {
         JSONArray jsonarray;
         JSONObject person;
         PreparedStatement insertPS = null;
-        PreparedStatement truncateTablePS = null;
-        int counter = 0;                    // ＤＢ寫入次數計數器
+        int insertDB_Counter = 0;                    // ＤＢ寫入次數計數器
 
         
         // DB 寫入
@@ -90,11 +84,6 @@ public class jsonInDB_GarbageTruckLive {
             Statement statement = connection.createStatement();
             // 抓到的網頁內容轉型、丟入 JSONArray
             jsonarray = (JSONArray) parser.parse(xmlResponse);
-            
-            // 資料表清空
-            truncateTablePS = connection.prepareStatement("TRUNCATE TABLE jsonIn_GarbageTruckLineMap");
-            System.out.println("[!] 已清空資料表");
-            System.out.println("[↑] 開始寫入 ＤＢ ...");
 
             for (Object o : jsonarray) {
 
@@ -112,26 +101,22 @@ public class jsonInDB_GarbageTruckLive {
                 insertPS.setString(3, time);
 
                 String location = (String) person.get("location");
-                insertPS.setString(4, location);
+                String location_replace = location.replace("附近", "");
+                insertPS.setString(4, location_replace);
 
-//                status ps.executeUpdate();
-                insertPS.executeUpdate();     // ？？？
+                insertPS.executeUpdate();     // 寫(更新)進資料庫
                 
-                counter++;
+                insertDB_Counter++;
 
             }
 
-        } catch (ParseException e1) {
-            System.out.println(e1);
-        } catch (ClassNotFoundException e2) {
-            System.out.println(e2);
-        } catch (SQLException e3) {
-            System.out.println(e3);
+        } catch (ParseException | ClassNotFoundException | SQLException e) {
+            System.out.println(e);
         } finally {
             try {
                 if (connection != null) {
                     connection.close();
-                    System.out.println("[✓] ＤＢ 寫入完成，共寫入 " + counter + " 筆資料");
+                    System.out.println("[✓] ＤＢ 寫入完成，累計寫入 " + insertDB_Counter + " 筆資料");
                 }
             } catch (Exception e4) {
                 System.out.println(e4);
@@ -139,5 +124,5 @@ public class jsonInDB_GarbageTruckLive {
         }
         
     }
-    
+
 }

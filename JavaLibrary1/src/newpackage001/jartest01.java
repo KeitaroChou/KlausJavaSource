@@ -1,8 +1,5 @@
-// ==========================================
-// 利用 Google Maps API ，將地址轉換爲經緯座標
-// ==========================================
 
-package Test_20150814_jsonInDB;
+package newpackage001;
 
 // 讀入引用連結內的資料
 import java.net.URL;
@@ -17,19 +14,19 @@ import org.json.JSONArray;
 // Exception
 import java.io.IOException;
 
-public class AddressTurnCoordinate {
+public class jartest01 {
 
     private String xmlResponse = null;
     public Double lng;                  // 經度
     public Double lat;                  // 緯度
 
     // 建構子
-    public AddressTurnCoordinate(String address) {
+    public jartest01(String address) {
 
         // 丟地址給 Google，然後將產生出的 ＪＳＯＮ 字串讀進程式
         try {
 
-            URL url = new URL("http://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&sensor=false");     // 抓取網頁位址
+            URL url = new URL("http://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&sensor=false&language=zh-TW");     // 抓取網頁位址
             HttpURLConnection huc = (HttpURLConnection) url.openConnection();   // 用 HttpURLConnection 開啟(建立連線)
 
             InputStreamReader isr = new InputStreamReader(huc.getInputStream(), "UTF-8");   // 串流讀取連結內資料
@@ -74,7 +71,7 @@ public class AddressTurnCoordinate {
     
     @Override
     public String toString() {
-        return "經度：" + this.lng + "\n" + "緯度：" + this.lat;
+        return "\t經度：" + this.lng + "\n" + "\t緯度：" + this.lat;
     }
 
 }
