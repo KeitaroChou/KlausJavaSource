@@ -20,13 +20,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class JSONInDB_GarbageTruckLineMapV2 {
+public class JSONInDB_GTLineMapV2 {
     
     static DBLinker_klaus dblinker = new DBLinker_klaus();
     int insertDB_counter = 0;       // ＤＢ寫入次數
 
     // 建構子
-    public JSONInDB_GarbageTruckLineMapV2(int skipNumber) {
+    public JSONInDB_GTLineMapV2(int skipNumber) {
 
         // MySQL JDBC Driver
         String driverName = "com.mysql.jdbc.Driver";
@@ -94,7 +94,7 @@ public class JSONInDB_GarbageTruckLineMapV2 {
                 for (Object o : jsonarray) {
 
                     // 資料寫入
-                    insertPS = connection.prepareStatement("INSERT INTO jsonIn_GarbageTruckLineMap values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    insertPS = connection.prepareStatement("INSERT INTO jsonIn_GarbageTruckLineMap values (?, ?, trim(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
                     person = (JSONObject) o;
 

@@ -20,12 +20,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class JSONInDB_GarbageTruckLive {
+public class JSONInDB_GTLive {
     
     static DBLinker_klaus dblinker = new DBLinker_klaus();
 
     // 建構子
-    public JSONInDB_GarbageTruckLive() {
+    public JSONInDB_GTLive() {
 
         // 連結資料庫
         String driverName = "com.mysql.jdbc.Driver";
