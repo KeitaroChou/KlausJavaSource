@@ -20,8 +20,8 @@ public class DBselect_GTLineMap implements GarbageTruckLineMapDAO {
 
             Class.forName(driverName);
             Connection connection = DriverManager.getConnection(connectionString);
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM jsonIn_GarbageTruckLineMap WHERE village like '%" + village + "%'");
-//            ps.setString(1, field);
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM jsonIn_GarbageTruckLineMap WHERE village = ?");
+            ps.setString(1, village);
             ResultSet resultSet = ps.executeQuery();
 
             ArrayList<GTLineMap> gTLineMapsList = new ArrayList();
@@ -80,8 +80,8 @@ public class DBselect_GTLineMap implements GarbageTruckLineMapDAO {
 
             Class.forName(driverName);
             Connection connection = DriverManager.getConnection(connectionString);
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM jsonIn_GarbageTruckLineMap WHERE city like '%" + city + "%'");
-//            ps.setString(1, field);
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM jsonIn_GarbageTruckLineMap WHERE city = ?");
+            ps.setString(1, city);
             ResultSet resultSet = ps.executeQuery();
 
             ArrayList<GTLineMap> gTLineMapsList = new ArrayList();
